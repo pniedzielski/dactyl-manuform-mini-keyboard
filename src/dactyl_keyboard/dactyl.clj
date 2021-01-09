@@ -1307,6 +1307,41 @@
     5 0
     6 -5.07))
 
+(def hdmi-jack-wall-thickness 0.25)
+(def hdmi-jack-width (+ 5.9 (* hdmi-jack-wall-thickness 2)))
+(def hdmi-jack-height (+ 2.3 (* hdmi-jack-wall-thickness 2)))
+(def hdmi-jack-upper-height (+ 1.53 (* hdmi-jack-wall-thickness 1.5)))
+(def hdmi-jack-lower-width (+ 4.44 (* hdmi-jack-wall-thickness 1.5)))
+(def hdmi-jack-geometry-points
+  [[0 (- 0 (/ hdmi-jack-width 2)) hdmi-jack-height]
+   [0 (/ hdmi-jack-width 2) hdmi-jack-height]
+   [0 (- 0 (/ hdmi-jack-width 2)) (- hdmi-jack-height hdmi-jack-upper-height)]
+   [0 (/ hdmi-jack-width 2) (- hdmi-jack-height hdmi-jack-upper-height)]
+   [0 (- 0 (/ hdmi-jack-lower-width 2)) 0]
+   [0 (/ hdmi-jack-lower-width 2) 0]
+
+   [-5 (- 0 (/ hdmi-jack-width 2)) hdmi-jack-height]
+   [-5 (/ hdmi-jack-width 2) hdmi-jack-height]
+   [-5 (- 0 (/ hdmi-jack-width 2)) (- hdmi-jack-height hdmi-jack-upper-height)]
+   [-5 (/ hdmi-jack-width 2) (- hdmi-jack-height hdmi-jack-upper-height)]
+   [-5 (- 0 (/ hdmi-jack-lower-width 2)) 0]
+   [-5 (/ hdmi-jack-lower-width 2) 0]])
+(def hdmi-jack-geometry-faces
+  [[0 1 3 5 4 2]
+   [8 10 11 9 7 6]
+   [6 7 1 0]
+   [7 9 3 1]
+   [9 11 5 3]
+   [11 10 4 5]
+   [10 8 2 4]
+   [8 6 0 2]])
+(def hdmi-jack (polyhedron hdmi-jack-geometry-points hdmi-jack-geometry-faces))
+
+(def hdmi-holder-cube (union (translate [-1 0 1] (cube 5 20.32 2))
+                             (translate [-3 0 1.5] (cube 5 8.5 1.5))))
+
+(def hdmi-holder (translate [-89.5 29.68 4] (rotate (deg2rad 346) [0 0 1] (union hdmi-jack hdmi-holder-cube))))
+
 (def usb-holder-ref (key-position 0 0 (map - (wall-locate2  0  -1) [0 (/ mount-height 2) 0])))
 
 (def usb-holder-position (map + [22.75 19.8 0] [(first usb-holder-ref) (second usb-holder-ref) 2]))
@@ -1483,6 +1518,7 @@
                      pinky-connectors
                      extra-connectors
                      connectors
+;;                     hdmi-holder
                      inner-connectors
                      thumb-type
                      thumb-connector-type
@@ -1494,6 +1530,7 @@
                                       )
                                ;; usb-holder-space
                                usb-jack
+                               hdmi-holder
                                ;; trrs-holder-hole
                                ;; reset-button-hole
                                screw-insert-holes))
