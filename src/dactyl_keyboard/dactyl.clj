@@ -1543,11 +1543,36 @@
                                screw-insert-holes))
                    (translate [0 0 -20] (cube 350 350 40))))
 
+(def model-left (mirror [-1 0 0] (difference
+                   (union
+                     key-holes
+                     key-holes-inner
+                     pinky-connectors
+                     extra-connectors
+                     connectors
+                     hdmi-seat
+                     inner-connectors
+                     thumb-type
+                     thumb-connector-type
+                     (difference (union case-walls
+                                        screw-insert-outers
+                                        hdmi-seat
+                                        ;; pro-micro-holder
+                                        ;; usb-holder-holder
+                                        ;; trrs-holder
+                                      )
+                               ;; usb-holder-space
+                               hdmi-cutout
+                               ;; trrs-holder-hole
+                               ;; reset-button-hole
+                               screw-insert-holes))
+                   (translate [0 0 -20] (cube 350 350 40)))))
+
 (spit "things/right.scad"
       (write-scad model-right))
 
 (spit "things/left.scad"
-      (write-scad (mirror [-1 0 0] model-right)))
+      (write-scad model-left))
 
 
 (def unit-test-position [-78 60 0])
