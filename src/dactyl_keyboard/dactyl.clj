@@ -28,7 +28,7 @@
 
 (def extra-row false)                   ; adds an extra bottom row to the outer columns
 (def inner-column true)                ; adds an extra inner column (two less rows than nrows)
-(def thumb-style "default")                ; toggles between "default", "mini", and "new" thumb cluster
+(def thumb-style "new")                ; toggles between "default", "mini", and "new" thumb cluster
 
 (def column-style :standard)
 
