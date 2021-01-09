@@ -1337,7 +1337,7 @@
 )
 
 (def usb-jack-cube (translate usb-jack-position (cube (- usb-jack-width usb-jack-height) 20 usb-jack-height)))
-(def usb-jack-back (translate (map + usb-jack-position [0 -16 -1.5]) (cube usb-jack-width 20 3)))
+(def usb-jack-back (translate (map + usb-jack-position [0 -16 -1.5]) (cube 18 20 3)))
 (def usb-jack (union usb-jack-left-side usb-jack-right-side usb-jack-cube usb-jack-back))
 
 (def pro-micro-position (map + (key-position 0 1 (wall-locate3 -1 0)) [-6 2 -25]))
@@ -1488,13 +1488,14 @@
                      thumb-connector-type
                      (difference (union case-walls
                                         screw-insert-outers
-                                        pro-micro-holder
-                                      usb-holder-holder
-                                      trrs-holder)
-                               usb-holder-space
+                                        ;; pro-micro-holder
+                                      ;; usb-holder-holder
+                                      ;; trrs-holder
+                                      )
+                               ;; usb-holder-space
                                usb-jack
-                               trrs-holder-hole
-                               reset-button-hole
+                               ;; trrs-holder-hole
+                               ;; reset-button-hole
                                screw-insert-holes))
                    (translate [0 0 -20] (cube 350 350 40))))
 
