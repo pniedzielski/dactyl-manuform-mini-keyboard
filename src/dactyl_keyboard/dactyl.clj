@@ -1337,10 +1337,12 @@
    [8 6 0 2]])
 (def hdmi-jack (polyhedron hdmi-jack-geometry-points hdmi-jack-geometry-faces))
 
-(def hdmi-holder-cube (union (translate [-1 0 1] (cube 5 20.32 2))
+(def hdmi-cutout-cube (union (translate [-1 0 1] (cube 5 20.32 2))
                              (translate [-3 0 1.5] (cube 5 8.5 1.5))))
 
-(def hdmi-holder (translate [-89.5 29.68 4] (rotate (deg2rad 346) [0 0 1] (union hdmi-jack hdmi-holder-cube))))
+(def hdmi-cutout (translate [-82.25 -17.25 4] (rotate (deg2rad 51) [0 0 1] (union hdmi-jack hdmi-cutout-cube))))
+
+(def hdmi-seat (translate [-82.25 -17.25 0] (rotate (deg2rad 51) [0 0 1] (translate [-0.5 0 2] (cube 5 14.32 4)))))
 
 (def usb-holder-ref (key-position 0 0 (map - (wall-locate2  0  -1) [0 (/ mount-height 2) 0])))
 
@@ -1374,6 +1376,8 @@
 (def usb-jack-cube (translate usb-jack-position (cube (- usb-jack-width usb-jack-height) 20 usb-jack-height)))
 (def usb-jack-back (translate (map + usb-jack-position [0 -16 -1.5]) (cube 18 20 3)))
 (def usb-jack (union usb-jack-left-side usb-jack-right-side usb-jack-cube usb-jack-back))
+
+(def usb-seat (translate (map + usb-jack-position [0 -9.5 -4.5]) (cube 12 5 3)))
 
 (def pro-micro-position (map + (key-position 0 1 (wall-locate3 -1 0)) [-6 2 -25]))
 (def pro-micro-space-size [4 10 12]) ; z has no wall;
@@ -1518,19 +1522,22 @@
                      pinky-connectors
                      extra-connectors
                      connectors
-;;                     hdmi-holder
+                     hdmi-seat
+                     usb-seat
                      inner-connectors
                      thumb-type
                      thumb-connector-type
                      (difference (union case-walls
                                         screw-insert-outers
+                                        hdmi-seat
+                                        usb-seat
                                         ;; pro-micro-holder
-                                      ;; usb-holder-holder
-                                      ;; trrs-holder
+                                        ;; usb-holder-holder
+                                        ;; trrs-holder
                                       )
                                ;; usb-holder-space
                                usb-jack
-                               hdmi-holder
+                               hdmi-cutout
                                ;; trrs-holder-hole
                                ;; reset-button-hole
                                screw-insert-holes))
