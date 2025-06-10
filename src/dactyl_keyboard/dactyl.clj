@@ -13,7 +13,7 @@
 ;; Shape parameters ;;
 ;;;;;;;;;;;;;;;;;;;;;;
 
-(def nrows 5)
+(def nrows 6)
 (def ncols 7)
 
 (def α (/ π 12))                        ; curvature of the columns
@@ -22,13 +22,13 @@
 (def centercol 4)                       ; controls left-right tilt / tenting (higher number is more tenting)
 (def tenting-angle (/ π 12))            ; or, change this for more precise tenting control
 
-(def pinky-15u true)                   ; controls whether the outer column uses 1.5u keys
+(def pinky-15u true)                    ; controls whether the outer column uses 1.5u keys
 (def first-15u-row 0)                   ; controls which should be the first row to have 1.5u keys on the outer column
-(def last-15u-row 3)                    ; controls which should be the last row to have 1.5u keys on the outer column
+(def last-15u-row 4)                    ; controls which should be the last row to have 1.5u keys on the outer column
 
-(def extra-row true)                   ; adds an extra bottom row to the outer columns
-(def inner-column true)                ; adds an extra inner column (two less rows than nrows)
-(def thumb-style "cf")                ; toggles between "default", "mini", and "cf" thumb cluster
+(def extra-row false)                   ; adds an extra bottom row to the outer columns
+(def inner-column true)                 ; adds an extra inner column (two less rows than nrows)
+(def thumb-style "cf")                  ; toggles between "default", "mini", and "cf" thumb cluster
 
 (def column-style :standard)
 
@@ -44,14 +44,14 @@
 
 (def thumb-offsets [6 -3 7])
 
-(def keyboard-z-offset 8)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
+(def keyboard-z-offset 9)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
 
 (def extra-width 2.5)                   ; extra space between the base of keys; original= 2
 (def extra-height 1.0)                  ; original= 0.5
 
 (def wall-z-offset -8)                 ; length of the first downward-sloping part of the wall (negative)
 (def wall-xy-offset 5)                  ; offset in the x and/or y direction for the first downward-sloping part of the wall (negative)
-(def wall-thickness 2)                  ; wall thickness parameter; originally 5
+(def wall-thickness 3)                  ; wall thickness parameter; originally 5
 
 ;; Settings for column-style == :fixed
 ;; The defaults roughly match Maltron settings
@@ -1351,7 +1351,7 @@
 (when (and (= thumb-style "cf") inner-column)
     (def screw-offset-bl [9 4 0])
     (def screw-offset-tm [9.5 -4.5 0])
-    (def screw-offset-bm [13 -7 0]))
+    (def screw-offset-bm [13.5 -7.5 0]))
 (when (and (= thumb-style "cf") (false? inner-column))
     (def screw-offset-bl [-7.7 2 0])
     (def screw-offset-tm [9.5 -4.5 0])
@@ -1374,7 +1374,7 @@
     (def screw-offset-bm [8 -1 0]))
 
          (defn screw-insert-all-shapes [bottom-radius top-radius height]
-  (union (screw-insert 0 0         bottom-radius top-radius height [8 10.5 0])
+  (union (screw-insert 0 0         bottom-radius top-radius height [9.1 10.5 0])
          (screw-insert 0 lastrow   bottom-radius top-radius height screw-offset-bl)
          (screw-insert lastcol lastrow  bottom-radius top-radius height screw-offset-br)
          (screw-insert lastcol 0         bottom-radius top-radius height screw-offset-tr)
