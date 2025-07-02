@@ -17,10 +17,10 @@
 (def ncols 7)
 
 (def α (/ π 12))                        ; curvature of the columns
-(def β (/ π 36))                        ; curvature of the rows
+(def β (/ π 60))                        ; curvature of the rows
 (def centerrow (- nrows 3))             ; controls front-back tilt
-(def centercol 4)                       ; controls left-right tilt / tenting (higher number is more tenting)
-(def tenting-angle (/ π 12))            ; or, change this for more precise tenting control
+(def centercol 3)                       ; controls left-right tilt / tenting (higher number is more tenting)
+(def tenting-angle (/ π 13))            ; or, change this for more precise tenting control
 
 (def pinky-15u true)                    ; controls whether the outer column uses 1.5u keys
 (def first-15u-row 0)                   ; controls which should be the first row to have 1.5u keys on the outer column
@@ -30,7 +30,7 @@
 (def inner-column true)                 ; adds an extra inner column (two less rows than nrows)
 (def thumb-style "cf")                  ; toggles between "default", "mini", and "cf" thumb cluster
 
-(def column-style :standard)
+(def column-style :orthographic)
 
 (defn column-offset [column]
   (if inner-column
@@ -44,14 +44,14 @@
 
 (def thumb-offsets [6 -3 7])
 
-(def keyboard-z-offset 9)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
+(def keyboard-z-offset 17)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
 
 (def extra-width 2.5)                   ; extra space between the base of keys; original= 2
-(def extra-height 1.0)                  ; original= 0.5
+(def extra-height 0.5)                  ; original= 0.5
 
-(def wall-z-offset -8)                 ; length of the first downward-sloping part of the wall (negative)
+(def wall-z-offset -15)                 ; length of the first downward-sloping part of the wall (negative)
 (def wall-xy-offset 5)                  ; offset in the x and/or y direction for the first downward-sloping part of the wall (negative)
-(def wall-thickness 3)                  ; wall thickness parameter; originally 5
+(def wall-thickness 4)                ; wall thickness parameter; originally 5
 
 ;; Settings for column-style == :fixed
 ;; The defaults roughly match Maltron settings
@@ -88,7 +88,7 @@
 
 (def plate-thickness 4)
 (def side-nub-thickness 4)
-(def retention-tab-thickness 1.5)
+(def retention-tab-thickness 1.4)
 (def retention-tab-hole-thickness (- (+ plate-thickness 0.5) retention-tab-thickness))
 (def mount-width (+ keyswitch-width 3.2))
 (def mount-height (+ keyswitch-height 2.7))
@@ -1339,22 +1339,22 @@
     (def screw-offset-br [7 14 0]))
 (when (and pinky-15u (false? extra-row))
     (def screw-offset-tr [1 7 0])
-    (def screw-offset-br [6.5 15.5 0]))
+    (def screw-offset-br [2 15.5 0]))
 (when (and (false? pinky-15u) extra-row)
     (def screw-offset-tr [-3.5 6.5 0])
     (def screw-offset-br [-3.5 -6.5 0]))
 (when (and (false? pinky-15u) (false? extra-row))
     (def screw-offset-tr [-4 6.5 0])
     (def screw-offset-br [-6 13 0]))
-    
+
 ; Offsets for the screw inserts dependent on thumb-style & inner-column
 (when (and (= thumb-style "cf") inner-column)
-    (def screw-offset-bl [9 4 0])
-    (def screw-offset-tm [9.5 -4.5 0])
-    (def screw-offset-bm [13.5 -7.5 0]))
+    (def screw-offset-bl [20 4 0])
+    (def screw-offset-tm [9.5 -4 0])
+    (def screw-offset-bm [16 -7.5 0]))
 (when (and (= thumb-style "cf") (false? inner-column))
     (def screw-offset-bl [-7.7 2 0])
-    (def screw-offset-tm [9.5 -4.5 0])
+    (def screw-offset-tm [9.5 -4 0])
     (def screw-offset-bm [13 -7 0]))
 (when (and (= thumb-style "mini") inner-column)
     (def screw-offset-bl [14 8 0])
@@ -1374,7 +1374,7 @@
     (def screw-offset-bm [8 -1 0]))
 
          (defn screw-insert-all-shapes [bottom-radius top-radius height]
-  (union (screw-insert 0 0         bottom-radius top-radius height [9.1 10.5 0])
+  (union (screw-insert 0 0         bottom-radius top-radius height [10.5 10.5 0])
          (screw-insert 0 lastrow   bottom-radius top-radius height screw-offset-bl)
          (screw-insert lastcol lastrow  bottom-radius top-radius height screw-offset-br)
          (screw-insert lastcol 0         bottom-radius top-radius height screw-offset-tr)
@@ -1385,8 +1385,8 @@
 (def screw-insert-height 6)
 
 ; Hole Diameter C: 4.1-4.4
-(def screw-insert-bottom-radius (/ 4.0 2))
-(def screw-insert-top-radius (/ 3.9 2))
+(def screw-insert-bottom-radius 2.655)
+(def screw-insert-top-radius 2.55)
 (def screw-insert-holes  (screw-insert-all-shapes screw-insert-bottom-radius screw-insert-top-radius screw-insert-height))
 
 ; Wall Thickness W:\t1.65
